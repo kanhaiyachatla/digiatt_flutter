@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "365535867982",
+    "project_id": "digiatt-corp",
+    "storage_bucket": "digiatt-corp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365535867982:android:ef6889c8a784f89ef33f1f",
+        "android_client_info": {
+          "package_name": "com.example.digiatt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365535867982-id04034a3sfkg0lbluvcbrdsv46vuto8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFnmXbZCGTKarOKecfWiGUDM0C7Rfxa2Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365535867982-id04034a3sfkg0lbluvcbrdsv46vuto8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
