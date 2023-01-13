@@ -9,13 +9,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+  String role;
+
+
+  SignupScreen({Key? key,required this.role}) : super(key: key);
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<SignupScreen> createState() => _SignupScreenState(role);
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  String role1;
+
+  _SignupScreenState(
+      this.role1
+      );
+
   @override
   final FormKey = GlobalKey<FormState>();
   var _name = TextEditingController();
@@ -26,6 +35,7 @@ class _SignupScreenState extends State<SignupScreen> {
   bool obscure = false, obscure1 = false;
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
 
     void initState() {
       obscure = false;
@@ -47,6 +57,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ])),
           child: Column(
             children: [
+              ElevatedButton(onPressed: () => snackbarKey.currentState!.showSnackBar(SnackBar(content: Text(role1))), child: Text('test')),
               SizedBox(
                 height: size.height / 10,
               ),
@@ -232,7 +243,7 @@ class _SignupScreenState extends State<SignupScreen> {
             email: _email.text.trim(), password: _password.text.trim()).then((value){
               final docRef = FirebaseFirestore.instance.collection('Users').doc(FirebaseAuth.instance.currentUser!.uid);
 
-              final user = UserModel(name: _name.text.trim(), email: _email.text.trim(), photourl: "");
+              final user = UserModel(name: _name.text.trim(), email: _email.text.trim(), photourl: "", role: role1);
               final json = user.toJson();
 
               docRef.set(json).then((value) {

@@ -43,7 +43,7 @@ class _SignupSelectState extends State<SignupSelect> {
                 onPressed: () {
                   //TODO create a nagivator which passes data to signup screen
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => SignupScreen()));
+                      MaterialPageRoute(builder: (context) => SignupScreen(role: 'teacher',)));
                 },
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -70,7 +70,7 @@ class _SignupSelectState extends State<SignupSelect> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SignupScreen()));
+                            builder: (context) => SignupScreen(role: "student")));
                   },
                   child: Padding(
                     padding: EdgeInsets.only(
