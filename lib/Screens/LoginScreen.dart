@@ -206,28 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: size.height / 15,
               ),
-              Text(
-                'Sign in with',
-                style: Theme.of(context).textTheme.headline3,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              InkWell(
-                onTap: () {
-                  //TODO Create a Google signin feature
-                  try {
-                    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-                    provider.googleLogin(context);
-                  } on Exception catch (e) {
-                    snackbarKey.currentState?.showSnackBar(SnackBar(content: Text(e.toString())));
-                  }
-                },
-                child: CircleAvatar(
-                    radius: 25,
-                    backgroundImage:
-                        AssetImage('lib/assets/images/google.jpg')),
-              )
+
 
             ],
           ),

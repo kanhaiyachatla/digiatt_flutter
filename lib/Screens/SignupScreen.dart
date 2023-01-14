@@ -4,9 +4,11 @@ import 'package:digiatt/Screens/LoginScreen.dart';
 import 'package:digiatt/Screens/VerifyEmailScreen.dart';
 import 'package:digiatt/main.dart';
 import 'package:digiatt/methods/UserModel.dart';
+import 'package:digiatt/methods/googlesigninprovider.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
   String role;
@@ -57,7 +59,6 @@ class _SignupScreenState extends State<SignupScreen> {
               ])),
           child: Column(
             children: [
-              ElevatedButton(onPressed: () => snackbarKey.currentState!.showSnackBar(SnackBar(content: Text(role1))), child: Text('test')),
               SizedBox(
                 height: size.height / 10,
               ),
@@ -123,6 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           TextFormField(
                             controller: _password,
                             obscureText: !obscure,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             decoration: InputDecoration(
                                 prefixIcon: Icon(Icons.lock_outline),
                                 hintText: 'Enter Password',
@@ -221,6 +223,31 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                 ),
+
+              ),
+              SizedBox(
+                height: size.height / 20,
+              ),
+              Text(
+                'Sign in with',
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              InkWell(
+                onTap: () {
+                  try {
+                    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+                    provider.googleLogin(context, role1);
+                  } on Exception catch (e) {
+                    snackbarKey.currentState?.showSnackBar(SnackBar(content: Text(e.toString())));
+                  }
+                },
+                child: CircleAvatar(
+                    radius: 25,
+                    backgroundImage:
+                    AssetImage('lib/assets/images/google.jpg')),
               )
             ],
           ),

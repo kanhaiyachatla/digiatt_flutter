@@ -156,16 +156,14 @@ class _CreateGroupState extends State<CreateGroup> {
     }).then((value) async{
       var snap = await FirebaseFirestore.instance.collection('Users').doc(cuser.uid).get();
       var map = snap.data()!;
-      map['role'] = 'admin';
 
       try {
-        FirebaseFirestore.instance.collection('Classes').doc(id).collection('members').doc(cuser.uid).set(map).then((value) {
-          FirebaseFirestore.instance.collection('Classes').doc(id).collection('members').doc(cuser.uid).update(
-              {'role' : 'admin'});
+        await FirebaseFirestore.instance.collection('Classes').doc(id).collection('members').doc(cuser.uid).set(map);
+          var classSnap = await docRef.get();
+          await FirebaseFirestore.instance.collection('Users').doc(cuser.uid).collection('inGroup').doc(id).set(classSnap.data()!);
           snackbarKey.currentState!.showSnackBar(SnackBar(content: Text('Group Created')));
           Navigator.of(context).pop();
           Navigator.of(context).pop();
-        });
 
       } on Exception catch (e) {
         snackbarKey.currentState!.showSnackBar(SnackBar(content: Text(e.toString())));
