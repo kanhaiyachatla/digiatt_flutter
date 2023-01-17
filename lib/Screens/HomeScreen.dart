@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:digiatt/Screens/ClassScreens/ClassHomeScreen.dart';
 import 'package:digiatt/Screens/CreateGroup.dart';
 import 'package:digiatt/Screens/ProfileScreen.dart';
 import 'package:digiatt/main.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
+import '../methods/CLassModel.dart';
 import 'JoinClass.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var user = FirebaseAuth.instance.currentUser!;
 
   var _code = TextEditingController();
+  var snap;
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +88,37 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
+
+      body: StreamBuilder(
+        stream: readClass(),
+        builder: (context,snapshot)   {
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return Center(child: CircularProgressIndicator(),);
+        }else if (snapshot.hasError){
+            return Container(child: Center(child: Text('Something went wrong'),),);
+          } else if(snapshot.hasData){
+            final users = snapshot.data!;
+
+            return ListView(children: users.map(buildClass).toList());
+          }else{
+            return Center(child: CircularProgressIndicator());
+          }
+          return Center(child: CircularProgressIndicator(),);
+        },
+      ),
     );
   }
+
+
+  Widget buildClass(ClassModel user) => ListTile(
+    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ClassHomeScreen(classData: user))),
+    leading: user.photourl == '' ? CircleAvatar(backgroundColor: Colors.grey.withOpacity(0.5),child: Icon(Icons.group, color: Colors.grey.shade700,),) :CircleAvatar(backgroundImage: NetworkImage(user.photourl),),
+    title: Text(user.name),
+    subtitle: Text(user.description),
+  );
+  
+  
+  Stream<List<ClassModel>> readClass() => FirebaseFirestore.instance.collection('Users').doc(user.uid).collection('inGroup').snapshots().map((snapshot) => snapshot.docs.map((doc) => ClassModel.fromJson(doc.data())).toList());
 
   Future<UserModel?> ReadUser() async {
     final Docid = FirebaseFirestore.instance.collection("Users").doc(user.uid);
