@@ -23,9 +23,9 @@ class _ClassHomeScreenState extends State<ClassHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         title: Text(classData.name),
       ),
-      bottomNavigationBar: Bott,
     );
   }
 }
