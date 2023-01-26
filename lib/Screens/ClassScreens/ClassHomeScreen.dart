@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:digiatt/Screens/HomeScreen.dart';
-import 'package:digiatt/main.dart';
+
 import 'package:digiatt/methods/CLassModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -27,11 +25,6 @@ class _ClassHomeScreenState extends State<ClassHomeScreen> {
   _ClassHomeScreenState(this.classData);
 
   var cUser = FirebaseAuth.instance.currentUser!;
-  var Screens = [
-    BodyClassHomeScreen(),
-    ClassAssignmentScreen(),
-    ClassParticipantsScreen(),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +36,7 @@ class _ClassHomeScreenState extends State<ClassHomeScreen> {
           ],
         ),
 
-        body: Screens[index],
+        body: getPage(index),
         bottomNavigationBar: Container(
           color: Theme.of(context).colorScheme.primary,
           child: Padding(
@@ -76,5 +69,19 @@ class _ClassHomeScreenState extends State<ClassHomeScreen> {
             ),
           ),
         ));
+  }
+  Widget? getPage(int index){
+    switch (index) {
+      case 0:
+        return BodyClassHomeScreen(classModel: classData,);
+        break;
+
+      case 1:
+        return ClassAssignmentScreen(classModel: classData,);
+        break;
+      case 2:
+        return ClassParticipantsScreen(classModel: classData,);
+        break;
+    }
   }
 }
